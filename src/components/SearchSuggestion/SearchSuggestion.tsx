@@ -2,7 +2,7 @@ import { type Suggestion } from "../../App";
 
 type SearchSuggestionProps = {
   suggestionList: Suggestion[];
-  onSelect: (id: string) => void;
+  onSelect: (data: Suggestion) => void;
 };
 
 function SearchSuggestion({ suggestionList, onSelect }: SearchSuggestionProps) {
@@ -12,7 +12,7 @@ function SearchSuggestion({ suggestionList, onSelect }: SearchSuggestionProps) {
         <div
           className="flex items-center space-x-3 px-2 cursor-pointer hover:bg-gray-400"
           key={suggestion.id}
-          onClick={() => onSelect(suggestion.id)}
+          onClick={() => onSelect(suggestion)}
         >
           <div className="w-[50px] h-[50px] rounded-full">
             <img
