@@ -5,7 +5,7 @@ export const useClickOutside = (
   callback: () => void
 ) => {
   const handleClickOutside = (event: MouseEvent) => {
-    if (ref && ref?.current && !ref?.current?.contains(event.target)) {
+    if (ref && ref?.current && !ref?.current?.contains(event.target as Node)) {
       callback();
     }
   };

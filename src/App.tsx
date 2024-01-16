@@ -4,6 +4,7 @@ import { users } from "./data/users";
 import SearchSuggestion from "./components/SearchSuggestion";
 import Input from "./components/Input";
 import { useClickOutside } from "./hooks/useClickOutside";
+import SelectedPanel from "./components/SelectedPanel/SelectedPanel";
 
 export type Suggestion = {
   id: string;
@@ -63,6 +64,7 @@ function App() {
       setAvailableData([...availableData, removedSuggestion]);
       setSuggestionList([...suggestionList, removedSuggestion]);
     }
+    inputRef.current?.focus();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -77,32 +79,14 @@ function App() {
   return (
     <div className="h-screen w-full  flex items-center justify-center border">
       <section
-        className="inline-flex items-center flex-wrap border-b-2  border-blue-600"
+        className="flex items-center flex-wrap border-b-2  border-blue-600 w-[800px]"
         ref={containerRfe}
       >
-        <div className="flex space-x-2 max-w-[700px]">
-          {selectedList.map((selectedEl) => (
-            <div
-              className="flex items-center space-x-1 bg-gray-300 rounded-full p-1"
-              key={selectedEl.id}
-            >
-              <div className="w-[28px] h-[28px] rounded-full">
-                <img
-                  src={selectedEl.pic}
-                  className="w-full rounded-full object-cover"
-                />
-              </div>
-              <p className="text-sm">{selectedEl.name}</p>
-              <button
-                className=" px-2 text-lg"
-                onClick={() => handleRemoveSelection(selectedEl.id)}
-              >
-                x
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="relative">
+        <SelectedPanel
+          selectedList={selectedList}
+          onRemoveSelection={(id) => handleRemoveSelection(id)}
+        />
+        <div className="relative inline-block">
           <Input
             type="text"
             placeholder="Add New user..."
@@ -112,6 +96,7 @@ function App() {
             onKeyDown={handleKeyDown}
             onClick={() => setIsActive(true)}
           />
+
           {isSearchSuggestionShowAble && (
             <div className="absolute top-15">
               <SearchSuggestion
